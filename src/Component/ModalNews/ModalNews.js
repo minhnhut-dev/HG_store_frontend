@@ -18,7 +18,7 @@ function ModalNews() {
           [x]
         </p>
         <img
-          src="https://www.anphatpc.com.vn/media/banner/popup_back2skul-popup-2-min.png"
+          src="https://cdn3.dhht.vn/wp-content/uploads/2022/12/mini-banner-trang-chu-fossil-heritage.jpg"
           alt="modal__image"
         />
       </Modal>

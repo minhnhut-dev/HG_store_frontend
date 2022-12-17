@@ -26,13 +26,13 @@ import { getAllTypeProduct } from "../../apis/categories";
       <div className="gearvn-header-navigation ">
         <div className="row gearvn-content-section gearvn-header-navigation-content padding-10-0 container">
           <div className="gearvn-header-menu">
-            <div className="cat-menu gearvn-cat-menu">
+            <div className="cat-menu gearvn-cat-menu" style={{height: 'auto'}}>
               <nav id="megamenu-nav" className="megamenu-nav">
                 <ol className="megamenu-nav-main">
                  {typeProduct.map((item, index)=>(
                        <li className="cat-menu-item " key={index}>
                        <Link className="gearvn-cat-menu-item" to={`/collections/${item.id}`}>
-                         <div className="gearvn-cat-menu-icon" dangerouslySetInnerHTML={{__html:item.icon}}>
+                         <div className="gearvn-cat-menu-icon" dangerouslySetInnerHTML={{__html: item.icon}}>
                          </div>
                          <span className="gearvn-cat-menu-name">{item.TenLoai}</span>
                        </Link>
@@ -42,9 +42,9 @@ import { getAllTypeProduct } from "../../apis/categories";
               </nav>
             </div>
           </div>
-          <div className="gearvn-header-navigation-block">
+          <div className="gearvn-header-navigation-block">  
             <div className="gearvn-header-banner">
-              <div className="left">
+              <div className="left" style={{width: '100%'}}>
                 <div className="slider-wrap">
                   <Carousel>
                     {slides.map((slide, index) =>(
@@ -58,62 +58,16 @@ import { getAllTypeProduct } from "../../apis/categories";
                     ))}
                   </Carousel>
                 </div>
-                <div className="sub-banner-wrap i100">
-                  <a className="sub-item" href="#">
-                    <img src="//theme.hstatic.net/1000026716/1000440777/14/solid4.jpg?v=19359" />
-                  </a>
-                  <a className="sub-item" href="#">
-                    <img src="//theme.hstatic.net/1000026716/1000440777/14/solid5.jpg?v=19359" />
-                  </a>
-                </div>
+              
               </div>
-              <div className="right i100">
-                <div className="sub-item-right">
-                  <a className="sub-item" href="#">
-                    <img src="//theme.hstatic.net/1000026716/1000440777/14/solid1.jpg?v=19359" />
-                  </a>
-                  <a className="sub-item" href="#">
-                    <img src="//theme.hstatic.net/1000026716/1000440777/14/solid2.jpg?v=19359" />
-                  </a>
-                  <a className="sub-item" href="#">
-                    <img src="//theme.hstatic.net/1000026716/1000440777/14/solid3.jpg?v=19359" />
-                  </a>
-                </div>
-              </div>
+             
             </div>
           </div>
         </div>
       </div>
       <div className=" gearvn-content-section i100 mb-10" id="xxx-banner">
         <div className="row row-margin-small">
-          <div className="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-10 col-padding-small">
-            <div className="border-rus">
-              <a href="#">
-                <img src="//theme.hstatic.net/1000026716/1000440777/14/xxxbanner1.jpg?v=19359" />
-              </a>
-            </div>
-          </div>
-          <div className="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-10 col-padding-small">
-            <div className="border-rus">
-              <a href="#">
-                <img src="//theme.hstatic.net/1000026716/1000440777/14/xxxbanner2.jpg?v=19359" />
-              </a>
-            </div>
-          </div>
-          <div className="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-10 col-padding-small">
-            <div className="border-rus">
-              <a href="#">
-                <img src="//theme.hstatic.net/1000026716/1000440777/14/xxxbanner3.jpg?v=19359" />
-              </a>
-            </div>
-          </div>
-          <div className="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-10 col-padding-small">
-            <div className="border-rus">
-              <a href="#">
-                <img src="//theme.hstatic.net/1000026716/1000440777/14/xxxbanner4.jpg?v=19359" />
-              </a>
-            </div>
-          </div>
+          <img src="https://lh3.googleusercontent.com/pw/AL9nZEVdWNLiFtJdhseX8bd1v7pR1EZ-xnPcmDByR205Ku3uxcTVgqNK_pw7XoQwUH8nLVaO1w6N4FcS6QenhH_vIOyiovbcdLdBC9ornBgtv_qU9hTxM3CzjkYrRdCTRgq3cCnQyJ78DRBtEBykFSOilqVJ=w1920-h528-no?authuser=0"/>
         </div>
       </div>
     </>

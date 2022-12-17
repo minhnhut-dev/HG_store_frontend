@@ -439,6 +439,11 @@
   .sub-item-right >a, .sub-banner-wrap.i100 >a {
     background-size: 100% 100%;
   }
+  .sub-item img {
+    width: 371px;
+    height: 187px;
+    object-fit: fill;
+  }
   .sub-banner-wrap.i100 >a:nth-child(1) img {
     -webkit-border-radius: 0 0 0 4px;
     -moz-border-radius: 0 0 0 4px;

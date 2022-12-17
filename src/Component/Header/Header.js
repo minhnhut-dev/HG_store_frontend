@@ -204,14 +204,14 @@ function Header() {
                         </a>
                       </span>
                     </li>
-                    <li>
+                    {/* <li>
                       <img src="//theme.hstatic.net/1000026716/1000440777/14/gNewsFavIco.png?v=19349" />
                       <span>
                         <Link to="/buildPC" style={{ color: "#ea1c00" }}>
                           Xây dựng cấu hình
                         </Link>
                       </span>
-                    </li>
+                    </li> */}
                     <li>
                       <img src="//theme.hstatic.net/1000026716/1000440777/14/logo_hr.png?v=19349" />
                       <span>
