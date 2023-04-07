@@ -14,7 +14,6 @@
     "bootstrap": "^4.6.0",
     "crypto-js": "^4.0.0",
     "dotenv": "^16.0.1",
-    "fotorama-react-wrapper": "^1.0.7",
     "html-react-parser": "^1.2.7",
     "http-proxy-middleware": "^0.19.1",
     "image-to-base64": "^2.2.0",
