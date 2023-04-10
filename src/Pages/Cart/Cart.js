@@ -336,7 +336,7 @@ function Cart(props) {
     var dola = totalPrice / 23000;
     return dola.toFixed(2).toString();
   };
-  const apiEndPoint = "/transactionProcessor";
+  const apiEndPoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
   var partnerCode = "MOMO6KRQ20210610";
   var accessKey = "MYc8b7Wo8858OGUg";
   var secretKey = "zG3fTEcy3voCjcyLAWr81b4mBcmYG8DD";
