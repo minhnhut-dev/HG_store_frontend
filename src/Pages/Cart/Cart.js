@@ -296,13 +296,6 @@ function Cart(props) {
   //       });
   //   }
   // };
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
   //Thanh toán tiền mặc
   if (redirect && optionPayment == 2) {
     // return window.location.assign(payURL);
@@ -543,7 +536,6 @@ function Cart(props) {
                                 placeholder="Nhập họ tên"
                                 name="name"
                                 value={name}
-                                onChange={(e) => setName(e.target.value)}
                                 {...register("name", {required: true})}
                                 error={Boolean(errors.name)}
                                 helperText={errors.name && "Tên khách hàng là bắt buộc"}
@@ -559,6 +551,7 @@ function Cart(props) {
                                 name="email"
                                 {...register("email", {required: true})}
                                 error={Boolean(errors.email)}
+                                helperText={errors.email && "Email là bắt buộc"}
                               />
                             </div>
                             <div className="input-group name d-flex">
@@ -569,9 +562,10 @@ function Cart(props) {
                                 placeholder="Nhập số điện thọai"
                                 name="phone"
                                 value={phone}
-                                // onChange={(e) => setPhone(e.target.value)}
                                 {...register("phone", {required: true})}
                                 error={Boolean(errors.phone)}
+                                helperText={errors.phone && "Số điện thoại là bắt buộc"}
+
                               />
                               <TextField
                                 style={{ marginLeft: "10px" }}
@@ -582,8 +576,7 @@ function Cart(props) {
                                 value={address}
                                 {...register("address", {required: true})}
                                 error={Boolean(errors.address)}
-
-                                // onChange={(e) => setAddress(e.target.value)}
+                                helperText={errors.address && "Địa chỉ là bắt buộc"}
                               />
                             </div>
                             <div className="box-cart-user-info">
@@ -595,13 +588,9 @@ function Cart(props) {
                                 style={{ marginRight: "15px" }}
                               >
                                 <input
-                                  // name="Cash"
                                   type="radio"
                                   name="payment"
                                   value="1"
-                                  // onChange={(e) =>
-                                  //   setOptionPayment(e.target.value)
-                                  // }
                                   {...register("payment", {required: true})}
                                 />
                                 <label

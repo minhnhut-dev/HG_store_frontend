@@ -6,7 +6,7 @@ import "./TypeProduct.css";
 import { Form } from "react-bootstrap";
 import NumberFormat from "react-number-format";
 import Paginate from "../../Component/Pagination/Paginate";
-import {getTypeProductById, getProductbyProductCatalogueId} from "../../apis/products";
+import {getTypeProductById, getProductbyProductCatalogueId, getProductbyCategoryId} from "../../apis/products";
 import {linkImage} from "../../constants/index";
 export default function TypeProduct() {
   let { id } = useParams();
@@ -20,9 +20,10 @@ export default function TypeProduct() {
   }
 
   useEffect(() => {
-    getProductbyProductCatalogueId({id: id, page: page})
+    getProductbyCategoryId({id: id, page: page})
       .then((res) => {
-        setProduct(res.data.data);
+        console.log(res)
+        setProduct(res.data);
         setTotal(res.last_page);
       });
   }, [page]);
@@ -44,6 +45,7 @@ export default function TypeProduct() {
       return;
     }
   };
+
   return (
     <>
       <Header />

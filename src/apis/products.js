@@ -1,6 +1,5 @@
 import axiosClient from "../services/axiosSevice";
 import {DOMAIN} from "../constants/index";
-import { AssignmentReturnedOutlined } from "@material-ui/icons";
 
 export const getAllProduct = () => {
   return axiosClient.get(`${DOMAIN}/api/getAllProduct`);
@@ -44,4 +43,7 @@ export const getProductCatalogues = () => {
 
 export const getProductbyProductCatalogueId = (params) => {
   return axiosClient.get(`${DOMAIN}/api/getProductbyProductCatalogueId/${params.id}?page=${params.page}`);
+}
+export const getProductbyCategoryId = (params) => {
+  return axiosClient.get(`${DOMAIN}/api/getProductByTypeProductId/${params.id}?page=${params.page}`);
 }
