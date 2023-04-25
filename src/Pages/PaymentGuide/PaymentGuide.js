@@ -9,11 +9,6 @@ function PaymentGuide() {
       <div className="ladi-wraper">
         <div id="SECTION1" className="ladi-section">
           <div className="ladi-section-background"></div>
-          <div className="ladi-container">
-            <Link to="/" id="IMAGE120" className="ladi-element">
-              <img src={Logo} alt="logo" />
-            </Link>
-          </div>
         </div>
         <div id="SECTION2" className="ladi-section">
           <div className="ladi-section-background"></div>

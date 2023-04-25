@@ -28,78 +28,73 @@ function PaymentResult(){
   var name = query.get("localMessage");
   var message = query.get("message");
   var response_code=query.get("vnp_ResponseCode");
-  useMemo(() => {
-    if (name == "Thành công") {
-      console.log('vao day')
-      updateOrder(data)
-        .then((res) => {
+  var orderId = query.get('orderId');
+
+  // useMemo(() => {
+  //   if (name == "Thành công") {
+  //     console.log('vao day')
+  //     updateOrder(data)
+  //       .then((res) => {
           
-          console.log(res);
-          setStatusOrder("Đơn hàng thành công");
-        });
+  //         console.log(res);
+  //         setStatusOrder("Đơn hàng thành công");
+  //       });
 
-    } else if (message == 1) {
-      console.log('vao day')
-      updateOrder(data)
-        .then((res) => {
-          console.log(res);
-        });
-      name = "Đơn hàng thành công";
-      setStatusOrder("Đơn hàng thành công");
-    }
-    else if(response_code =="00")
-    {
-      console.log('vao day')
+  //   } else if (message == 1) {
+  //     updateOrder(data)
+  //       .then((res) => {
+  //         console.log(res);
+  //       });
+  //     name = "Đơn hàng thành công";
+  //     setStatusOrder("Đơn hàng thành công");
+  //   }
+  //   else if(response_code =="00")
+  //   {
+  //     updateOrder(data)
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+  //   setStatusOrder("Đơn hàng thành công");
+  //   }
+  //    else if (message == 2) {
+  //     console.log('vao day')
 
-      updateOrder(data)
-      .then((res) => {
-        console.log(res);
-      });
-    setStatusOrder("Đơn hàng thành công");
-    }
-     else if (message == 2) {
-      console.log('vao day')
-
-      updateOrderCanceled(orderInfo.id)
-      .then((res) => {
-        console.log(res);
-      });
-      name = "Đơn hàng bị hủy";
-      console.log("paypal");
-      setStatusOrder("Đơn hàng bị hủy");
-
-    } 
-    else if(message == 3){
-      console.log('vao day')
-
-      const data_1 ={
-        status: 1,
-        order_id: orderInfo.id
-      }
-      updateOrder(data_1)
-      .then((res) => {
-        console.log(res);
-      });
-      name = "Đơn hàng thành công";
-      setStatusOrder("Đơn hàng thành công");
-    }
-    else {
-      console.log('vao day')
-      updateOrderCanceled(orderInfo.id)
-      .then((res) => {
-        console.log(res);
-      });
-      name = "Đơn hàng bị hủy";
-      setStatusOrder("Đơn hàng bị hủy");
-    }
-  }, []);
-  
+  //     updateOrderCanceled(orderInfo.id)
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+  //     name = "Đơn hàng bị hủy";
+  //     setStatusOrder("Đơn hàng bị hủy");
+  //   } 
+  //   else if(message == 3){
+  //     const data_1 ={
+  //       status: 1,
+  //       order_id: orderInfo.id
+  //     }
+  //     updateOrder(data_1)
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+  //     name = "Đơn hàng thành công";
+  //     setStatusOrder("Đơn hàng thành công");
+  //   }
+  //   else {
+  //     console.log('vao day')
+  //     updateOrderCanceled(orderInfo.id)
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+  //     name = "Đơn hàng bị hủy";
+  //     setStatusOrder("Đơn hàng bị hủy");
+  //   }
+  // }, []);
   useEffect(() => {
-    getInformationOrderById(orderInfo.id)
+    getInformationOrderById(orderId)
       .then((res) => {
         setOder(res);
       });
   }, []);
+
   return (
     <>
       <Header />
@@ -162,12 +157,8 @@ function PaymentResult(){
                   </div>
                 </div>
               </div>
-              <Link to="/account-order" className="view-list-order">
-                <i className="far fa-arrow-left"></i>
-                <span className="backOrder">Quay lại đơn hàng của tôi</span>
-              </Link>
               <Link
-                to={`/account/order/${orderInfo.id}`}
+                to={`/account/order/${orderId}`}
                 className="view-tracking-detail"
               >
                 Xem đơn hàng

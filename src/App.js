@@ -38,6 +38,7 @@ function App() {
 
   const initData = {
     quantity: cartItems,
+    setCartItems: setCartItems
   };
 
   useEffect(() => {
@@ -112,6 +113,7 @@ function App() {
                 onAdd={onAdd}
                 onRemove={onRemove}
                 onRemoveAll={onRemoveAll}
+                setCartItems={setCartItems}
               />
             </Route>
             <Route path="/account-order">

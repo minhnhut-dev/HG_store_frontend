@@ -164,6 +164,7 @@ function Register() {
                 type="text"
                 label="Tên tài khoản"
                 name="username"
+                error={Boolean(errors.name)}
                 {...register("username", { required: true,  maxLength: 20, pattern: /^\S*$/
                 })}
                 />

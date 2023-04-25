@@ -11,7 +11,6 @@ function Home(props) {
   
   return (
     <>
-      <ModalNews />
       <Header/>
       <Banner />
       <Body products={products} loading={loading}/>
