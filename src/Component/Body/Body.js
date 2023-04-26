@@ -16,6 +16,7 @@ function Body(props) {
     return (
     <>
       <div className="container pd0-sm-mb">
+        <div dangerouslySetInnerHTML={{__html: `  <div class="zalo-chat-widget" data-oaid="1117289676740842034" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="" data-height=""></div>`}}></div>
        {loading ?<Skeleton  count={5} /> :  <ProductBestSellingByBrand products={products}/>} 
        {productCatalogues.map((item,index)=>(
           loading ? <Skeleton  count={5}/> : <ProductCatalogue key={index} title={item.name} id={item.id} />

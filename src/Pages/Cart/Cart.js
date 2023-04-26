@@ -374,7 +374,7 @@ function Cart(props) {
                                 </label>
                               </div> */}
                             </div>
-                            <div className="box-cart-user-info">
+                            {/* <div className="box-cart-user-info">
                               <div className="title_box_cart">
                                 3. Hình thức giao hàng
                               </div>
@@ -398,7 +398,7 @@ function Cart(props) {
                                   COD
                                 </label>
                               </div>
-                            </div>
+                            </div> */}
                             {paypal ? (
                               <Paypal
                                 Moneyconversion={Moneyconversion(totalPrice)}
