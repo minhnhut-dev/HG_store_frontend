@@ -39,3 +39,8 @@ export const updateOrderCanceled = (order_id) => {
 export const getInformationOrderById = (order_id) =>{
   return axiosClient.get(`${DOMAIN}/api/getInformationOrderById/${order_id}`);
 }
+
+export const createOrderMomo = (params) => {
+  return axiosClient.post(`${DOMAIN}/api/orderMomo`, params);
+
+}

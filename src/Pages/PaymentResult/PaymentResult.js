@@ -129,14 +129,14 @@ function PaymentResult(){
                 <div className="address-User">
                   <div className="title">Địa chỉ người nhận</div>
                   <div className="content">
-                    <p className="name">{item.TenNguoidung}</p>
+                    <p className="name">{item.ten_nguoi_dung}</p>
                     <p className="address">
                       <span>Địa chỉ:</span>
-                      {item.DiaChi}
+                      {item.diachigiaohang}
                     </p>
                     <p className="phone">
                       <span>Số điện thoại: </span>
-                      {item.SDT}
+                      {item.sdt}
                     </p>
                   </div>
                 </div>

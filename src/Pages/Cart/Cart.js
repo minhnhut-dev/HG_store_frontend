@@ -5,17 +5,13 @@ import Footer from "../../Component/Footer/Footer";
 import NumberFormat from "react-number-format";
 import { Button } from "react-bootstrap";
 import "./Cart.css";
-import axios from "axios";
-import CryptoJS from "crypto-js";
 import Paypal from "../../Component/Paypal/Paypal";
 import { useSnackbar } from "notistack";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Backdrop from "@material-ui/core/Backdrop";
 import { useForm } from "react-hook-form";
 import { TextField } from "@material-ui/core";
-import {createOrder, createOrderVNpay} from "../../apis/order";
-import {updateUser} from "../../apis/account"
-import { DataUsage } from "@material-ui/icons";
+import {createOrder, createOrderVNpay, createOrderMomo} from "../../apis/order";
 import { useHistory } from "react-router-dom"
 
 function Cart(props) {
@@ -27,12 +23,6 @@ function Cart(props) {
   const totalPrice = itemsPrice;
   const LinkImage = "http://127.0.0.1:8000/images/";
   const [optionPayment, setOptionPayment] = useState();
-  const [optionShipping, setOptionShipping] = useState(1);
-  const [open, setOpen] = React.useState(false);
-  const [errorQty, setError] = useState("");
-  const [errorPayment, setErrorPayment] = useState([]);
-  const [errorShipping, setErrorShipping] = useState([]);
-  const [errorLogin, setErrorLogin] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [payURL, setPayURL] = useState();
   const [paypal, setPayPal] = useState(false);
@@ -55,321 +45,18 @@ function Cart(props) {
     setOpenBackDrop(false);
   };
 
-  // const handleOrder = async (e) => {
-  //   e.preventDefault();
-  //   const dataUser = {
-  //     name: name,
-  //     DiaChi: address,
-  //     SDT: phone,
-  //     user_id: userLogin.id
-  //   };
-  //   const data = {
-  //     nguoi_dungs_id: userLogin.id,
-  //     hinh_thuc_thanh_toans_id: optionPayment,
-  //     hinh_thuc_giao_hangs_id: optionShipping,
-  //     trang_thai_don_hangs_id: 1,
-  //     line_items: newArr,
-  //   };
-
-  //   if (!optionPayment || !optionShipping || userLogin.id == null) {
-  //     createOrder(data)
-  //       .then(() => {
-  //         setOpen(true);
-  //         setTimeout(() => {
-  //           setRedirect(true);
-  //         }, 2000);
-  //       })
-  //       .catch((err) => {
-  //         if (err.response.data.hinh_thuc_giao_hangs_id != undefined) {
-  //           enqueueSnackbar(err.response.data.hinh_thuc_giao_hangs_id, {
-  //             variant: "error",
-  //             autoHideDuration: 3000,
-  //             preventDuplicate: true,
-  //           });
-  //         }
-
-  //         if (err.response.data.nguoi_dungs_id != undefined) {
-  //           enqueueSnackbar(err.response.data.nguoi_dungs_id, {
-  //             variant: "error",
-  //             autoHideDuration: 3000,
-  //             preventDuplicate: true,
-  //           });
-  //         }
-
-  //         if (err.response.data.hinh_thuc_thanh_toans_id != undefined) {
-  //           enqueueSnackbar(err.response.data.hinh_thuc_thanh_toans_id, {
-  //             variant: "error",
-  //             autoHideDuration: 3000,
-  //             preventDuplicate: true,
-  //           });
-  //         }
-  //       });
-  //   } else if (optionPayment == 1) {
-  //     updateUser(dataUser)
-  //       .then(() => {
-  //         setOpenBackDrop(true);
-  //         createOrder(data) // goi api tao don hang
-  //           .then((response) => {
-  //             enqueueSnackbar("Chúc mừng bạn đã đặt hàng thành công", {
-  //               variant: "success",
-  //               autoHideDuration: 3000,
-  //               preventDuplicate: true,
-  //             });
-  //             setRedirect(true);
-  //             localStorage.setItem(
-  //               "Order",
-  //               JSON.stringify(response.order)
-  //             );
-  //             localStorage.removeItem("cartItems");
-  //             window.location.reload();
-  //           })
-  //           .catch((err) => {
-  //             setOpenBackDrop(false);
-  //             if (err.response.data.error != undefined) {
-  //               enqueueSnackbar(err.response.data.error, {
-  //                 variant: "error",
-  //                 autoHideDuration: 3000,
-  //                 preventDuplicate: true,
-  //               });
-  //             }
-  //           });
-  //       })
-  //       .catch((err) => {
-  //         if (err.response.data.DiaChi != undefined) {
-  //           enqueueSnackbar(err.response.data.DiaChi, {
-  //             variant: "error",
-  //             autoHideDuration: 3000,
-  //             preventDuplicate: true,
-  //           });
-  //         }
-  //         if (err.response.data.SDT != undefined) {
-  //           enqueueSnackbar(err.response.data.SDT, {
-  //             variant: "error",
-  //             autoHideDuration: 3000,
-  //             preventDuplicate: true,
-  //           });
-  //         }
-  //       });
-  //   } else if (optionPayment == 2) {
-  //     var dataMoMo = {
-  //       accessKey: accessKey,
-  //       partnerCode: partnerCode,
-  //       requestType: requestType,
-  //       notifyUrl: notifyUrl,
-  //       returnUrl: returnUrl,
-  //       orderId: orderId,
-  //       amount: amount,
-  //       orderInfo: orderInfo,
-  //       requestId: requestId,
-  //       extraData: extraData,
-  //       signature: signature,
-  //     };
-
-  //     updateUser(dataUser)
-  //       .then(() => {
-  //         axios.post(apiEndPoint, dataMoMo).then((response) => {
-  //           if (response.data.errorCode == 0) {
-  //             setPayURL(response.data.payUrl);
-  //             createOrder(data)
-  //               .then((response) => {
-  //                 console.log(response.order);
-  //                 localStorage.setItem(
-  //                   "Order",
-  //                   JSON.stringify(response.order)
-  //                 );
-  //                 localStorage.removeItem("cartItems");
-  //                 setRedirect(true);
-  //               })
-  //               .catch((err) => {
-  //                 setRedirect(false);
-  //                 if (err.response.data.error !== undefined) {
-  //                   enqueueSnackbar(err.response.data.error, {
-  //                     variant: "error",
-  //                     autoHideDuration: 3000,
-  //                     preventDuplicate: true,
-  //                   });
-  //                 }
-  //               });
-  //           } else {
-  //             setRedirect(false);
-  //             enqueueSnackbar(response.data.localMessage, {
-  //               variant: "error",
-  //               autoHideDuration: 3000,
-  //               preventDuplicate: true,
-  //             });
-  //           }
-  //         });
-  //       })
-  //       .catch((err) => {
-  //         if (err.response.data.DiaChi != undefined) {
-  //           enqueueSnackbar(err.response.data.DiaChi, {
-  //             variant: "error",
-  //             autoHideDuration: 3000,
-  //             preventDuplicate: true,
-  //           });
-  //         }
-  //         if (err.response.data.SDT != undefined) {
-  //           enqueueSnackbar(err.response.data.SDT, {
-  //             variant: "error",
-  //             autoHideDuration: 3000,
-  //             preventDuplicate: true,
-  //           });
-  //         }
-  //       });
-  //   } else if (optionPayment == 3) {
-  //     updateUser(dataUser)
-  //       .then(() => {
-  //         createOrder(data)
-  //           .then((response) => {
-  //             localStorage.setItem(
-  //               "Order",
-  //               JSON.stringify(response.order)
-  //             );
-  //             localStorage.removeItem("cartItems");
-  //             setPayPal(true);
-  //           })
-  //           .catch((err) => {
-  //             setPayPal(false);
-  //             if (err.response.data.error != undefined) {
-  //               enqueueSnackbar(err.response.data.error, {
-  //                 variant: "error",
-  //                 autoHideDuration: 3000,
-  //                 preventDuplicate: true,
-  //               });
-  //             }
-  //           });
-  //       })
-  //       .catch((err) => {
-  //         if (err.response.data.DiaChi != undefined) {
-  //           enqueueSnackbar(err.response.data.DiaChi, {
-  //             variant: "error",
-  //             autoHideDuration: 3000,
-  //             preventDuplicate: true,
-  //           });
-  //         }
-  //         if (err.response.data.SDT != undefined) {
-  //           enqueueSnackbar(err.response.data.SDT, {
-  //             variant: "error",
-  //             autoHideDuration: 3000,
-  //             preventDuplicate: true,
-  //           });
-  //         }
-  //       });
-  //   } else if (optionPayment == 4) {
-  //     updateUser(dataUser)
-  //       .then(() => {
-  //         createOrderVNpay(data)
-  //           .then((response) => {
-  //             setPayURL(response.pay_url.data);
-  //             localStorage.setItem(
-  //               "Order",
-  //               JSON.stringify(response.Order)
-  //             );
-  //             localStorage.removeItem("cartItems");
-  //             setRedirect(true);
-  //           })
-  //           .catch((err) => {
-  //             if (err.response.data.error != undefined) {
-  //               enqueueSnackbar(err.response.data.error, {
-  //                 variant: "error",
-  //                 autoHideDuration: 3000,
-  //                 preventDuplicate: true,
-  //               });
-  //             }
-  //           });
-  //       })
-  //       .catch((err) => {
-  //         if (err.response.data.DiaChi != undefined) {
-  //           enqueueSnackbar(err.response.data.DiaChi, {
-  //             variant: "error",
-  //             autoHideDuration: 3000,
-  //             preventDuplicate: true,
-  //           });
-  //         }
-  //         if (err.response.data.SDT != undefined) {
-  //           enqueueSnackbar(err.response.data.SDT, {
-  //             variant: "error",
-  //             autoHideDuration: 3000,
-  //             preventDuplicate: true,
-  //           });
-  //         }
-  //       });
-  //   }
-  // };
-  //Thanh toán tiền mặc
-  if (redirect && optionPayment == 2) {
-    // return window.location.assign(payURL);
-    return window.location.replace(payURL);
-    //  return window.location.href = payURL;
-  } else if (redirect && optionPayment == 1) {
-    return <Redirect to="/resultOrder/?message=3" />;
-  } else if (redirect && optionPayment == 4) {
-    return window.location.replace(payURL);
+  const handleOpenBackDrop = () => {
+    setOpenBackDrop(true);
   }
 
   // Thanh toán MOMO
 
-  const randomId = () => {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  };
-
-  const GenerateID = () => {
-    return (
-      randomId() +
-      randomId() +
-      "-" +
-      randomId() +
-      "-" +
-      randomId() +
-      "-" +
-      randomId() +
-      "-" +
-      randomId()
-    );
-  };
   const Moneyconversion = (totalPrice) => {
     var dola = totalPrice / 23000;
     return dola.toFixed(2).toString();
   };
-  const apiEndPoint = "/transactionProcessor";
-  var partnerCode = "MOMO6KRQ20210610";
-  var accessKey = "MYc8b7Wo8858OGUg";
-  var secretKey = "zG3fTEcy3voCjcyLAWr81b4mBcmYG8DD";
-  var requestType = "captureMoMoWallet";
-  var orderInfo = "Payment MOMO";
-  var amount = totalPrice.toString();
-  var orderId = "HD" + GenerateID();
-  var returnUrl = "http://localhost:3000/resultOrder/";
-  var notifyUrl = "http://localhost:3000/resultOrder/";
-  var requestId = orderId;
-  var extraData = "email=tienxmin0123@gmail.com";
-  var raw_signature =
-    "partnerCode=" +
-    partnerCode +
-    "&accessKey=" +
-    accessKey +
-    "&requestId=" +
-    requestId +
-    "&amount=" +
-    amount +
-    "&orderId=" +
-    orderId +
-    "&orderInfo=" +
-    orderInfo +
-    "&returnUrl=" +
-    returnUrl +
-    "&notifyUrl=" +
-    notifyUrl +
-    "&extraData=" +
-    extraData;
 
-  var signature = CryptoJS.HmacSHA256(raw_signature, secretKey).toString(
-    CryptoJS.enc.Hex
-  );
- 
-  const onSubmit = data => {
+  const handleCreateOrder = async(data) => {
     createOrder({ten_nguoi_dung: data.name, 
       email: data.email, sdt: data.phone, 
       diachigiaohang: data.address, 
@@ -377,9 +64,10 @@ function Cart(props) {
       hinh_thuc_giao_hangs_id: data.shipping,
       trang_thai_don_hangs_id: 1,
       line_items: newArr
-    }).then(res => {
+    })
+    .then(res => {
       if(res){
-        setOpenBackDrop(true);
+        handleOpenBackDrop();
         setCartItems([]);
         history.push(`/resultOrder?orderId=${res.order.id}`)
       }
@@ -389,6 +77,30 @@ function Cart(props) {
       autoHideDuration: 3000,
       preventDuplicate: true,
       });})
+  }
+  
+  const onSubmit = async(data) => {
+    switch (data.payment) {
+      case '1':
+         await handleCreateOrder(data);
+        break;
+      case '2':
+        createOrderMomo({ten_nguoi_dung: data.name, 
+          email: data.email, sdt: data.phone, 
+          diachigiaohang: data.address, 
+          hinh_thuc_thanh_toans_id: data.payment,
+          hinh_thuc_giao_hangs_id: data.shipping,
+          trang_thai_don_hangs_id: 1,
+          line_items: newArr
+        }).then(response => {
+          console.log(response);
+          setCartItems([]);
+          window.location.assign(response.payURL);
+        })
+        break;
+      default:
+        break;
+    }
   }
 
   return (
@@ -606,13 +318,9 @@ function Cart(props) {
 
                               <div id="momo">
                                 <input
-                                  // name="payment_momo"
                                   type="radio"
                                   name="payment"
                                   value="2"
-                                  // onChange={(e) =>
-                                  //   setOptionPayment(e.target.value)
-                                  // }
                                   {...register("payment", {required: true})}
                                 />
                                 <label
@@ -626,15 +334,11 @@ function Cart(props) {
                                   <span> Cổng thanh toán MOMO</span>
                                 </label>
                               </div>
-                              <div id="paypal">
+                              {/* <div id="paypal">
                                 <input
-                                  // name="payment_paypal"
                                   type="radio"
                                   name="payment"
                                   value="3"
-                                  // onChange={(e) =>
-                                  //   setOptionPayment(e.target.value)
-                                  // }
                                   {...register("payment", {required: true})}
                                 />
                                 <label
@@ -647,10 +351,9 @@ function Cart(props) {
                                   <i className="fab fa-cc-paypal"></i>
                                   <span> Paypal</span>
                                 </label>
-                              </div>
-                              <div id="vnpay">
+                              </div> */}
+                              {/* <div id="vnpay">
                                 <input
-                                  // name="payment_vnpay"
                                   type="radio"
                                   name="payment"
                                   value="4"
@@ -669,7 +372,7 @@ function Cart(props) {
                                   <i className="cs-vnpay"></i>
                                   <span> Cổng thanh toán VNPAY</span>
                                 </label>
-                              </div>
+                              </div> */}
                             </div>
                             <div className="box-cart-user-info">
                               <div className="title_box_cart">
@@ -683,11 +386,7 @@ function Cart(props) {
                                   name="shipping"
                                   type="radio"
                                   value="1"
-                                  // onChange={(e) =>
-                                  //   setOptionShipping(e.target.value)
-                                  // }
                                   {...register("shipping", {required: true})}
-                                  // checked
                                 />
                                 <label
                                   style={{
@@ -715,7 +414,6 @@ function Cart(props) {
                               id="checkout"
                               name="checkout"
                               type="submit"
-                              // onClick={handleCreateOrder}
                             >
                               Thanh toán
                             </Button>
